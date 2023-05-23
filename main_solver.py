@@ -9,7 +9,10 @@ def sort_columns_by_absmax(matrix):
     """
     k = matrix.shape[1] - 1
     while k > 0:
-        ind = np.argmax(np.abs(matrix[0, 1:k + 1])).__index__()
+        ind = 0
+        for j in range(1, k + 1):
+            if abs(matrix[0][j]) > abs(matrix[0][ind]) > 0:
+                ind = j
         matrix[:, [ind, k]] = matrix[:, [k, ind]]
         k -= 1
     nulls = 0
@@ -51,6 +54,7 @@ def gaussian_elimination(matrix):
     for i in range(np.shape(matrix)[0]):
         while not np.all(matrix[i][i + 1:] == 0):
             matrix[i:, i:] = sort_columns_by_absmax(matrix[i:, i:])
+            print(matrix)
             dividers = divide_arr(matrix[i][i + 1:], matrix[i][i])
             for j, div in enumerate(dividers):
                 matrix[:, (i + 1) + j] -= matrix[:, i] * div
@@ -102,20 +106,22 @@ def finish_solution(rank, matrix_c, a_values, m):
 
 if __name__ == '__main__':
     solve_system(
-        [[27, 19, -35, -50, -6, -8, -25, -16],
-        [44, -28, -42, -12, 38, -50, -42, 13],
-         [-6, -11, 25, -11, 12, 32, -6, -29],
-         [-45, -42, 29, 10, -30, -10, -38, 32]],
-        [[-4],
-        [-48],
-         [-29],
-        [-8]]
-        # [[2, -11, 13, 5, 5],
-        # [62, 22, -73, 7, 7],
-        # [2, 5, -1, 8, 9]],
-        # [[1],
-        # [-31],
-        # [-1]]
+        # [[27, 19, -35, -50, -6, -8, -25, -16],
+        # [44, -28, -42, -12, 38, -50, -42, 13],
+        #  [-6, -11, 25, -11, 12, 32, -6, -29],
+        #  [-45, -42, 29, 10, -30, -10, -38, 32]],
+        # [[-4],
+        # [-48],
+        #  [-29],
+        # [-8]]
+        [[87, 13, 6],
+        [1, 0, 0],
+        [0,1,0],
+        [0,0,1]],
+        [[-1],
+        [0],
+        [0],
+        [0]]
 
     )
 
